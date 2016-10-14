@@ -379,7 +379,10 @@ public class EmbeddedPostgres implements Closeable
         private PgBinaryResolver pgBinaryResolver = new BundledPostgresBinaryResolver();
 
         Builder() {
+            // Settings as per Postgres nondurable guidelines https://www.postgresql.org/docs/9.6/static/non-durability.html
             config.put("timezone", "UTC");
+            config.put("fsync", "off");
+            config.put("full_page_writes", "off");
             config.put("synchronous_commit", "off");
             config.put("max_connections", "300");
         }
